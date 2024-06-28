@@ -38,6 +38,12 @@ metadata:
       ) "context" $ ) }}
   annotations: {{- include "common.tplvalues.render" ( dict "value" $annotations "context" $) | nindent 4 }}
   {{- end }}
+    {{- if $root.Values.cluster.externalAccess.service.indexAnnotations }}
+    {{- $indexAnnotations := index $root.Values.cluster.externalAccess.service.indexAnnotations $i }}
+    {{- range $key, $value := $indexAnnotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+    {{- end }}
 spec:
   type: {{ $root.Values.cluster.externalAccess.service.type }}
   {{- if and
